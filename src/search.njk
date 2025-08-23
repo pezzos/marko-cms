@@ -1,0 +1,21 @@
+---
+title: Search
+excludeFromSearch: true
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/assets/main.css" />
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <h1>{{ title }}</h1>
+    <form>
+      <input type="search" id="search-input" placeholder="Search..." />
+    </form>
+    <ul id="search-results"></ul>
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+    <script src="/assets/search.js"></script>
+  </body>
+</html>
