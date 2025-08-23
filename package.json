@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "eleventy --serve",
-    "build": "eleventy",
+    "dev": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css --watch & eleventy --serve",
+    "build": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css && eleventy",
     "lint": "echo 'lint placeholder'; exit 0",
     "test": "echo 'test placeholder'; exit 0"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8.4.35",
+    "autoprefixer": "^10.4.16"
   }
 }
