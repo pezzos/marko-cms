@@ -1,5 +1,6 @@
 ---
 title: Styleguide
+comments: true
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -27,5 +28,8 @@ title: Styleguide
     </ol>
     <blockquote>Sample blockquote.</blockquote>
     {% include "backlinks.njk" %}
+    {% if comments %}
+      {% include "comments.njk" %}
+    {% endif %}
   </body>
 </html>

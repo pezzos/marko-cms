@@ -12,5 +12,8 @@ title: Hello Tenerife
   <body>
     <h1>{{ title }}</h1>
     {% include "backlinks.njk" %}
+    {% if comments %}
+      {% include "comments.njk" %}
+    {% endif %}
   </body>
 </html>

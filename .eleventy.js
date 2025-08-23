@@ -19,6 +19,7 @@ function escapeRegExp(str) {
 export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static");
   eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets" });
+  eleventyConfig.addNunjucksPath("src/_includes");
 
   eleventyConfig.addFilter("rssDate", (dateObj) => dateObj.toUTCString());
   eleventyConfig.addFilter("absoluteUrl", (path, base) => new URL(path, base).toString());
@@ -137,6 +138,8 @@ export default function(eleventyConfig) {
   return {
     dir: {
       input: "src",
+      includes: "_includes",
+      data: "_data",
       output: "dist"
     }
   };

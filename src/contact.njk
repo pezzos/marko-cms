@@ -26,5 +26,8 @@ title: Contact
     </form>
     <p id="form-status"></p>
     <script src="/assets/contact.js"></script>
+    {% if comments %}
+      {% include "comments.njk" %}
+    {% endif %}
   </body>
 </html>
