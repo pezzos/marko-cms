@@ -18,5 +18,8 @@ excludeFromSearch: true
     <script src="https://unpkg.com/lunr/lunr.js"></script>
     <script src="/assets/search.js"></script>
     {% include "backlinks.njk" %}
+    {% if comments %}
+      {% include "comments.njk" %}
+    {% endif %}
   </body>
 </html>

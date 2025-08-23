@@ -1,0 +1,18 @@
+comments:
+  branch: main
+  commitMessage: "chore(comment): add comment by {fields.name}"
+  path: "src/_data/comments/{options.slug}"
+  filename: "{@timestamp}"
+  format: json
+  allowedFields:
+    - name
+    - email
+    - message
+    - honeypot
+  requiredFields:
+    - name
+    - email
+    - message
+  transforms:
+    email: md5
+  moderation: true
