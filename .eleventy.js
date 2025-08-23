@@ -29,9 +29,50 @@ export default function(eleventyConfig) {
     return content.trim().split(/\s+/).slice(0, words).join(" ");
   });
 
+  eleventyConfig.addFilter("urlKey", (url = "") => url.replace(/\/$/, ""));
+
   eleventyConfig.addCollection("search", (collection) =>
     collection.getAll().filter((item) => item.data.title && !item.data.excludeFromSearch)
   );
+
+  eleventyConfig.addCollection("backlinks", (collection) => {
+    const map = {};
+    collection.getAll().forEach((page) => {
+      const pageUrl = (page.url || "").replace(/\/$/, "");
+      if (!page.templateContent) return;
+      posthtml([
+        (tree) => {
+          tree.match({ tag: "p" }, (p) => {
+            for (const [term, href] of Object.entries(glossary)) {
+              if (href.replace(/\/$/, "") === pageUrl) continue;
+
+              const linkTerm = (nodes) => {
+                let linked = false;
+                for (const node of nodes) {
+                  if (linked) break;
+                  if (typeof node === "string") {
+                    const regex = new RegExp(`(${escapeRegExp(term)})`, "i");
+                    if (regex.test(node)) linked = true;
+                  } else if (node.tag && !["code", "pre", "a"].includes(node.tag)) {
+                    if (linkTerm(node.content || [])) linked = true;
+                  }
+                }
+                return linked;
+              };
+
+              if (linkTerm(p.content || [])) {
+                const target = href.replace(/\/$/, "");
+                if (!map[target]) map[target] = [];
+                map[target].push(page);
+              }
+            }
+            return p;
+          });
+        }
+      ]).process(page.templateContent, { sync: true });
+    });
+    return map;
+  });
 
   eleventyConfig.addTransform("glossary", function (content) {
     if (!this.outputPath || !this.outputPath.endsWith(".html")) return content;
