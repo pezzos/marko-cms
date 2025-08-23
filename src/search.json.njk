@@ -1,0 +1,14 @@
+---
+permalink: /search.json
+eleventyExcludeFromCollections: true
+---
+[
+{% for page in collections.search %}
+  {
+    "title": {{ page.data.title | dump | safe }},
+    "url": {{ page.url | dump | safe }},
+    "tags": {{ (page.data.tags or []) | dump | safe }},
+    "excerpt": {{ (page.templateContent | striptags | excerpt(200)) | dump | safe }}
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+]
