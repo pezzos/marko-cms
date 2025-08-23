@@ -1,21 +1,9 @@
 ---
 title: Hello Tenerife
+layout: page.njk
 ---
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="preconnect" href="{{ site.url }}">
-    <link rel="stylesheet" href="/assets/main.css">
-    <link rel="alternate" type="application/rss+xml" href="/feed.xml">
-    <title>{{ title }}</title>
-  </head>
-  <body>
-    <h1>{{ title }}</h1>
-    <p>{% image "/assets/img/demo.jpg", "Demo", "(max-width: 768px) 90vw, 1200px" %}</p>
-    {% include "backlinks.njk" %}
-    {% if comments %}
-      {% include "comments.njk" %}
-    {% endif %}
-  </body>
-</html>
+<p>{% image "/assets/img/demo.jpg", "Demo", "(max-width: 768px) 90vw, 1200px" %}</p>
+{% include "backlinks.njk" %}
+{% if comments %}
+  {% include "comments.njk" %}
+{% endif %}
