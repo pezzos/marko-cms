@@ -1,0 +1,12 @@
+{% set key = page.url | urlKey %}
+{% set links = collections.backlinks[key] %}
+{% if links and (links | length) %}
+<section>
+  <h2>Liens connexes</h2>
+  <ul>
+  {% for item in links | slice(0, 5) %}
+    <li><a href="{{ item.url }}">{{ item.data.title }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
