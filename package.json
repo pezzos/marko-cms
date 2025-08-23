@@ -1,0 +1,11 @@
+{
+  "name": "site-tenerife",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'dev placeholder'; exit 0",
+    "build": "echo 'build placeholder'; exit 0",
+    "lint": "echo 'lint placeholder'; exit 0",
+    "test": "echo 'test placeholder'; exit 0"
+  }
+}
