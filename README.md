@@ -26,6 +26,13 @@ Minimal documentation scaffold for a future static site.
 └─ .github/workflows/
 ```
 
+## Scripts
+
+- `npm run dev` – dev placeholder
+- `npm run build` – build placeholder
+- `npm run lint` – lint placeholder
+- `npm run test` – test placeholder
+
 Current scope: documentation only.
 
 See [docs/BRIEF.md](docs/BRIEF.md) for the full project brief.
