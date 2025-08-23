@@ -12,6 +12,8 @@
     "@11ty/eleventy": "^2.0.1",
     "tailwindcss": "^3.4.1",
     "postcss": "^8.4.35",
-    "autoprefixer": "^10.4.16"
+    "autoprefixer": "^10.4.16",
+    "posthtml": "^0.16.6",
+    "js-yaml": "^3.14.1"
   }
 }
