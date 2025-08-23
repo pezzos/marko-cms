@@ -105,3 +105,6 @@ temp/
 # IDE directories
 .idea/
 .vscode/
+
+# Generated assets
+static/assets/
