@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import yaml from "js-yaml";
 import posthtml from "posthtml";
+import Image from "@11ty/eleventy-img";
+import { minify } from "html-minifier-terser";
 
 const glossaryPath = path.join("src", "data", "glossary.yml");
 let glossary = {};
@@ -20,6 +22,26 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static");
   eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets" });
   eleventyConfig.addNunjucksPath("src/_includes");
+
+  eleventyConfig.addNunjucksAsyncShortcode("image", async (src, alt, sizes) => {
+    const fullSrc = path.join("src", src);
+    const metadata = await Image(fullSrc, {
+      widths: [480, 768, 1024, 1600],
+      formats: ["webp", "jpeg"],
+      outputDir: "./dist/assets/img/",
+      urlPath: "/assets/img/",
+      cacheOptions: {
+        directory: ".cache/img"
+      }
+    });
+    const imageAttributes = {
+      alt,
+      sizes,
+      loading: "lazy",
+      decoding: "async"
+    };
+    return Image.generateHTML(metadata, imageAttributes);
+  });
 
   eleventyConfig.addFilter("rssDate", (dateObj) => dateObj.toUTCString());
   eleventyConfig.addFilter("absoluteUrl", (path, base) => new URL(path, base).toString());
@@ -133,6 +155,21 @@ export default function(eleventyConfig) {
     ])
       .process(content, { sync: true })
       .html;
+  });
+
+  eleventyConfig.addTransform("htmlmin", async function (content) {
+    if (
+      process.env.NODE_ENV === "production" &&
+      this.outputPath &&
+      this.outputPath.endsWith(".html")
+    ) {
+      return minify(content, {
+        collapseWhitespace: true,
+        removeComments: true,
+        useShortDoctype: true
+      });
+    }
+    return content;
   });
 
   return {

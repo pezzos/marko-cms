@@ -108,3 +108,7 @@ temp/
 
 # Generated assets
 static/assets/
+
+# Demo images generated at build time
+src/assets/img/*
+!src/assets/img/.gitkeep
