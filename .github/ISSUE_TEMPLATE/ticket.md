@@ -1,18 +1,27 @@
 ---
 name: Ticket
-about: Standard work item
-labels: []
+about: Tâche unitaire et exécutable
+title: ""
+labels: ""
+assignees: ""
 ---
 
-## Context
+## Contexte
+Se référer à docs/BRIEF.md et README.md.
 
-## Objective
+## Objectif
+Décrire l’objectif produit en une phrase claire.
 
-## Deliverables
+## Livrables
+- [ ] Fichier / Feature X
+- [ ] Fichier / Feature Y
 
 ## Acceptance Criteria
+- [ ] Critère vérifiable 1
+- [ ] Critère vérifiable 2
 
-## Out of Scope
+## Hors-scope
+- Ce qui NE DOIT PAS être fait dans ce ticket.
 
 ## Notes
-
+Liens utiles, refs.
