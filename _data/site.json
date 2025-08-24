@@ -1,0 +1,7 @@
+{
+  "title": "Hello template",
+  "description": "A simple site",
+  "url": "https://example.com",
+  "defaultLocale": "en",
+  "locales": ["en", "fr", "es"]
+}
