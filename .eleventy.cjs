@@ -4,8 +4,10 @@ const yaml = require("js-yaml");
 const posthtml = require("posthtml");
 const Image = require("@11ty/eleventy-img");
 const { minify } = require("html-minifier-terser");
+const site = require("./_data/site.json");
+const { i18nPath, t } = require("./src/filters/i18n.js");
 
-const glossaryPath = path.join("src", "data", "glossary.yml");
+const glossaryPath = path.join("_data", "glossary.yml");
 let glossary = {};
 try {
   const file = fs.readFileSync(glossaryPath, "utf8");
@@ -21,6 +23,31 @@ function escapeRegExp(str) {
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("static");
   eleventyConfig.addPassthroughCopy({ "src/assets/js": "assets" });
+  eleventyConfig.ignores.add("src/filters/**");
+
+  const locales = site.locales;
+
+  eleventyConfig.addFilter("i18nPath", (url, locale) =>
+    i18nPath(url, locale, site.defaultLocale)
+  );
+  eleventyConfig.addFilter("t", (key, locale) =>
+    t(key, locale, site.defaultLocale)
+  );
+
+  eleventyConfig.addGlobalData("eleventyComputed", {
+    lang: (data) => {
+      if (data.lang) return data.lang;
+      const segments = (data.page?.filePathStem || "").split("/");
+      const lang = segments[1];
+      return locales.includes(lang) ? lang : site.defaultLocale;
+    }
+  });
+
+  locales.forEach((loc) => {
+    eleventyConfig.addCollection(loc, (collection) =>
+      collection.getFilteredByGlob(`content/${loc}/**/*`)
+    );
+  });
 
   eleventyConfig.addNunjucksAsyncShortcode("image", async (src, alt, sizes) => {
     const fullSrc = path.join("src", src);
@@ -141,8 +168,8 @@ module.exports = function(eleventyConfig) {
 
   return {
     dir: {
-      input: "src",
-      includes: "_includes",
+      input: ".",
+      includes: "src/_includes",
       data: "_data",
       output: "dist"
     }
