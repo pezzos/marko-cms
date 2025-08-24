@@ -40,6 +40,19 @@ module.exports = function(eleventyConfig) {
       const segments = (data.page?.filePathStem || "").split("/");
       const lang = segments[1];
       return locales.includes(lang) ? lang : site.defaultLocale;
+    },
+    baseUrl: (data) => {
+      const segments = (data.page?.filePathStem || "").split("/").slice(2);
+      const slug = segments.join("/");
+      return slug === "index" ? "/" : `/${slug}/`;
+    },
+    permalink: (data) => {
+      if (data.permalink) return data.permalink;
+      const segments = (data.page?.filePathStem || "").split("/");
+      const locale = segments[1];
+      const slug = segments.slice(2).join("/");
+      const path = slug === "index" ? "/" : `/${slug}/`;
+      return i18nPath(path, locale, site.defaultLocale);
     }
   });
 
