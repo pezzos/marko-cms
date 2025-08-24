@@ -1,0 +1,53 @@
+<h1>Marko CMS</h1>
+<p>Marko CMS is a reusable static-site template that combines Markdown content, Eleventy layouts and Tailwind CSS. It is designed to be deployed on Cloudflare Pages and supports Formspree for forms and Staticman for comments.</p>
+<h2>Installation</h2>
+<h3>Prerequisites</h3>
+<ul>
+<li><a href="https://nodejs.org/">Node.js</a> and either npm or pnpm</li>
+<li><a href="https://git-scm.com/">Git</a></li>
+</ul>
+<h3>Steps</h3>
+<pre><code class="language-bash">git clone https://github.com/pezzos/marko-cms.git
+cd marko-cms
+npm install      # or: pnpm install
+npm run dev      # start the local development server
+</code></pre>
+<h2>Project Structure</h2>
+<pre><code class="language-text">content/            Markdown files
+layouts/            Shared HTML templates
+public/             Static assets copied as-is
+scripts/            Utility scripts (e.g., new:page)
+.github/workflows/  GitHub Actions for automatic builds
+</code></pre>
+<h2>Deploying to Cloudflare Pages</h2>
+<ol>
+<li>Connect your repository to <a href="https://pages.cloudflare.com/">Cloudflare Pages</a>.</li>
+<li>Set the build command to <code>npm run build</code>.</li>
+<li>Set the output directory to <code>dist/</code>.</li>
+<li>Add environment variables if your setup requires them.</li>
+</ol>
+<h2>Forms with Formspree</h2>
+<ol>
+<li>Create a Formspree account and obtain an endpoint URL.</li>
+<li>Replace the placeholder URL in <code>src/contact.njk</code> with your endpoint.</li>
+<li>Deploy and test the form to confirm submissions are delivered.</li>
+</ol>
+<h2>Comments with Staticman</h2>
+<ol>
+<li>Review the <a href="https://staticman.net/docs/">Staticman documentation</a>.</li>
+<li>Fork the Staticman API, add a <code>staticman.yml</code> file to this repository and configure GitHub access.</li>
+<li>Staticman will submit pull requests containing each new comment in Markdown.</li>
+</ol>
+<h2>Planned Enhancements</h2>
+<ul>
+<li>Automatic linking of keywords between pages</li>
+<li>RSS feed generation</li>
+<li><code>npm run new:page</code> script for scaffolding</li>
+</ul>
+<h2>Contributing</h2>
+<ol>
+<li>Fork the repository and create a feature branch.</li>
+<li>Commit your changes and open a pull request.</li>
+</ol>
+<p>Issues can be reported via the <a href="https://github.com/your-user/marko-cms/issues">GitHub issue tracker</a>.</p>
+<p>This project is released under the <a href="./LICENSE">MIT License</a>.</p>

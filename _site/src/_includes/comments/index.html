@@ -1,0 +1,22 @@
+
+<section id="comments">
+  <h2>Comments</h2>
+  <form method="POST" action="">
+    <label for="comment-name">Name</label>
+    <input type="text" id="comment-name" name="fields[name]" required>
+
+    <label for="comment-email">Email</label>
+    <input type="email" id="comment-email" name="fields[email]" required>
+
+    <label for="comment-message">Message</label>
+    <textarea id="comment-message" name="fields[message]" required></textarea>
+
+    <input type="hidden" name="options[slug]" value="comments">
+    <input type="text" name="fields[honeypot]" style="display:none">
+
+    <button type="submit">Submit</button>
+    <p id="comment-status" aria-live="polite"></p>
+  </form>
+
+  
+</section>

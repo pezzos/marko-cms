@@ -1,11 +1,11 @@
 {
-  "name": "site-tenerife",
+  "name": "site-template",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css --watch & eleventy --serve",
+    "dev": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css --watch & eleventy --serve --config=.eleventy.cjs",
     "prebuild": "node scripts/generate-demo-images.js",
-    "build": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css && eleventy && npx cleancss -o ./dist/assets/main.css ./dist/assets/main.css",
+    "build": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css && eleventy --config=.eleventy.cjs && npx cleancss -o ./dist/assets/main.css ./dist/assets/main.css",
     "lint": "echo 'lint placeholder'; exit 0",
     "test": "echo 'test placeholder'; exit 0",
     "new:page": "node scripts/new-page.mjs --type=page --title",

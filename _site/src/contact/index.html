@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/main.css">
+    <title>Contact</title>
+    
+  </head>
+  <body class="bg-white text-slate-800">
+    <a class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:p-2 focus:bg-white" href="#main">Aller au contenu</a>
+    <nav aria-label="Navigation principale">
+      <a href="/">Home</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <main id="main">
+      
+  <h1>Contact</h1>
+  <form id="contact-form" action="" method="POST">
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" required />
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required />
+
+  <label for="message">Message</label>
+  <textarea id="message" name="message" required></textarea>
+
+  <input type="text" name="_honeypot" id="honeypot" aria-hidden="true" tabindex="-1" style="display:none" />
+
+  <button type="submit">Send</button>
+</form>
+<p id="form-status" aria-live="polite"></p>
+<script src="/assets/contact.js"></script>
+
+
+
+    </main>
+  </body>
+</html>

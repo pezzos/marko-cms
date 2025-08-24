@@ -1,0 +1,94 @@
+<h1>Project Brief</h1>
+<h2>Objective</h2>
+<p>Create a 100% Markdown static site auto-deployed on Cloudflare Pages with:</p>
+<ul>
+<li>shared header and footer</li>
+<li>clean HTML generation (SEO/OG/RSS/sitemap)</li>
+<li>contact form via Formspree</li>
+<li>comments via Staticman (PR moderated)</li>
+<li>an auto-linker that connects words/phrases to titles of other pages</li>
+<li>review through GitHub PRs. One commit → build → deploy. No painful CMS.</li>
+</ul>
+<h2>Stack</h2>
+<ul>
+<li><strong>SSG:</strong> Eleventy (11ty) + Nunjucks</li>
+<li><strong>Styles:</strong> Tailwind CSS (JIT) with PostCSS autoprefixer</li>
+<li><strong>Build:</strong> Cloudflare Pages (Node 20), simple cache busting</li>
+<li><strong>Comments:</strong> Staticman v3 (GitHub App) with config in <code>staticman.yml</code></li>
+<li><strong>Contact:</strong> Formspree (endpoint via environment variable)</li>
+<li><strong>Search:</strong> Lunr.js index generated at build (serverless)</li>
+<li><strong>Analytics:</strong> Cloudflare Web Analytics (cookie-less)</li>
+<li><strong>Quality:</strong> ESLint + Prettier, link checker, minimal Lighthouse CI budget</li>
+</ul>
+<h2>Repository Structure</h2>
+<pre><code>/ (root)
+├─ src/
+│  ├─ content/
+│  │  ├─ pages/
+│  │  └─ posts/
+│  ├─ data/
+│  │  ├─ site.json
+│  │  ├─ nav.json
+│  │  └─ glossary.yml
+│  ├─ layouts/
+│  │  ├─ base.njk
+│  │  ├─ page.njk
+│  │  └─ post.njk
+│  ├─ includes/
+│  ├─ assets/
+│  │  ├─ css/  └─ main.css
+│  │  ├─ js/   └─ main.js
+│  │  └─ img/
+│  └─ filters/
+├─ .eleventy.js
+├─ staticman.yml
+├─ static/
+├─ netlify.toml (empty)
+├─ package.json
+├─ tailwind.config.cjs
+├─ postcss.config.cjs
+├─ README.md
+└─ .github/workflows/
+   ├─ ci.yml
+   └─ lighthouse.yml
+</code></pre>
+<h2>Front Matter (minimal)</h2>
+<pre><code>---
+title: &quot;Mare écologique &amp; biodiversité&quot;
+description: &quot;Concept, ROI, mise en œuvre à Icod.&quot;
+date: 2025-06-30
+tags: [&quot;eau&quot;,&quot;biodiversité&quot;]
+layout: &quot;page.njk&quot;
+---
+</code></pre>
+<h2>Auto-linker (build-time)</h2>
+<p>Source: <code>src/data/glossary.yml</code> where keys are regex-safe or exact strings and values are target slugs.
+Rules:</p>
+<ul>
+<li>no linking inside code, headers, or blockquotes</li>
+<li>at most one identical link per paragraph</li>
+<li>no self-links</li>
+<li>backlinks generated
+Implementation: Eleventy HTML post-render transform using linkedom with a DOM pass.</li>
+</ul>
+<h2>Comments (Staticman)</h2>
+<p><code>staticman.yml</code> sends comments to <code>data/comments/&lt;slug&gt;/YYYY-MM-DD-HHMM.json</code>.
+An HTML form posts to the Staticman endpoint; honeypot and optional reCAPTCHA.
+Each comment opens a PR to merge or close.</p>
+<h2>Contact (Formspree)</h2>
+<p>Simple HTML form with action set by <code>FORMSPREE_ENDPOINT</code> environment variable.
+Anti-spam via honeypot, <code>aria-hidden</code>, and <code>required</code> fields.</p>
+<h2>Deployment</h2>
+<p>Cloudflare Pages with framework set to Eleventy.
+Environment variables: <code>NODE_VERSION=20</code>, <code>FORMSPREE_ENDPOINT</code>, <code>SITE_BASEURL</code>, <code>CF_WEB_ANALYTICS_TOKEN</code>, <code>STATICMAN_BRANCH=main</code>.
+Build command: <code>npm run build</code> → Eleventy + PostCSS + Tailwind + Lunr index generation.</p>
+<h2>SEO / Accessibility</h2>
+<ul>
+<li><code>&lt;meta&gt;</code> tags for OG/Twitter and JSON-LD WebSite + BreadcrumbList</li>
+<li>automatic <code>sitemap.xml</code> and <code>robots.txt</code></li>
+<li>AA contrast, skip-link, proper headings</li>
+<li>no loud carousels</li>
+</ul>
+<h2>Security</h2>
+<p>Reasonable CSP: <code>self</code> + Cloudflare Analytics + Formspree + Staticman endpoint.
+No inline scripts without nonce.</p>

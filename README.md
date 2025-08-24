@@ -12,7 +12,7 @@ Marko CMS is a reusable static-site template that combines Markdown content, Ele
 ### Steps
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/pezzos/marko-cms.git
 cd marko-cms
 npm install      # or: pnpm install
 npm run dev      # start the local development server
