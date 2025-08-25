@@ -82,6 +82,11 @@ module.exports = function(eleventyConfig) {
     collection.getAll().filter((item) => item.data.title && !item.data.excludeFromSearch)
   );
 
+  // Posts collection (globbed on content/**/posts)
+  eleventyConfig.addCollection("posts", (collection) =>
+    collection.getFilteredByGlob("content/**/posts/**/*.{md,njk}")
+  );
+
   eleventyConfig.addCollection("backlinks", (collection) => {
     const map = {};
     // For now, return empty map to avoid templateContent issues

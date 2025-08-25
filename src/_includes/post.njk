@@ -1,5 +1,14 @@
 {% extends "base.njk" %}
 {% block content %}
-  <h1>{{ title }}</h1>
-  {{ content | safe }}
+  <article class="content">
+    <header>
+      <h1 class="page-title">{{ title }}</h1>
+      {% if date %}
+        <p class="meta"><time>{{ date }}</time></p>
+      {% endif %}
+    </header>
+    <div class="prose mt-4">
+      {{ content | safe }}
+    </div>
+  </article>
 {% endblock %}

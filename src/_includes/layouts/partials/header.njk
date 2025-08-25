@@ -1,6 +1,18 @@
 <header class="site-header">
-  <nav class="container" aria-label="Navigation principale">
-    <a href="{{ '/' | i18nPath(lang) }}"{% if page.url == ('/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'home' | t(lang) }}</a>
-    <a href="{{ '/contact/' | i18nPath(lang) }}"{% if page.url == ('/contact/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'contact' | t(lang) }}</a>
+  <nav class="navbar" aria-label="Primary">
+    <div class="container navbar-inner">
+      <a class="brand" href="{{ '/' | i18nPath(lang) }}">{{ site.title }}</a>
+      <ul class="nav">
+        <li>
+          <a href="{{ '/' | i18nPath(lang) }}"{% if page.url == ('/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'home' | t(lang) }}</a>
+        </li>
+        <li>
+          <a href="{{ '/posts/' | i18nPath(lang) }}"{% if page.url == ('/posts/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'blog' | t(lang) }}</a>
+        </li>
+        <li>
+          <a href="{{ '/contact/' | i18nPath(lang) }}"{% if page.url == ('/contact/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'contact' | t(lang) }}</a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </header>

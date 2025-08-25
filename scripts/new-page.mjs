@@ -47,7 +47,8 @@ const slug = providedSlug ? slugify(providedSlug) : slugify(title);
 const now = new Date().toISOString();
 
 if (type === 'post') {
-  const destDir = path.join('src', 'content', 'posts');
+  const locale = args.locale || args.lang || 'en';
+  const destDir = path.join('content', locale, 'posts');
   fs.mkdirSync(destDir, { recursive: true });
   const datePrefix = now.slice(0, 10);
   const filePath = path.join(destDir, `${datePrefix}-${slug}.md`);
@@ -56,8 +57,8 @@ if (type === 'post') {
     `title: "${title}"`,
     'description: ""',
     `date: "${now}"`,
-    'layout: "layouts/post.njk"',
-    'tags: []',
+    'layout: "post.njk"',
+    'tags: ["posts"]',
     '---',
     `# ${title}`,
     '',
@@ -84,7 +85,7 @@ languages.forEach(lang => {
     `title: "${title}"`,
     'description: ""',
     `date: "${now}"`,
-    'layout: "layouts/page.njk"',
+    'layout: "page.njk"',
   ];
 
   if (lang !== 'en') {
@@ -101,4 +102,3 @@ languages.forEach(lang => {
   fs.writeFileSync(filePath, frontMatterLines.join('\n') + body);
   console.log(`Created ${filePath}`);
 });
-

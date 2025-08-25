@@ -105,11 +105,13 @@ select:focus-visible {
   border-bottom: 1px solid var(--muted);
 }
 
-.site-header nav {
-  display: flex;
-  gap: 1rem;
-  padding: 0.5rem 0;
-}
+/* Navbar (bootstrap-like feel) */
+.navbar { padding: 0.75rem 0; }
+.navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.brand { font-weight: 700; text-decoration: none; color: inherit; }
+.nav { list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0; }
+.nav a { text-decoration: none; color: inherit; padding: 0.25rem 0.5rem; border-radius: 4px; }
+.nav a[aria-current="page"], .nav a:hover, .nav a:focus-visible { background: color-mix(in oklab, var(--accent) 12%, transparent); }
 
 .site-footer {
   margin-top: 2rem;
@@ -118,6 +120,32 @@ select:focus-visible {
   font-size: 0.875rem;
   color: var(--muted);
 }
+
+/* Hero section for homepage */
+.hero { background: color-mix(in oklab, var(--accent) 6%, var(--bg)); border-bottom: 1px solid var(--muted); }
+.hero .container { max-width: 80ch; }
+.hero-inner { padding: 2rem 0; }
+.page-title { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.2; margin: 0; }
+.lead { font-size: 1.125rem; color: var(--muted); margin-top: 0.75rem; }
+
+/* Main content column */
+.content { max-width: 72ch; margin-inline: auto; }
+
+/* Cards (for post lists) */
+.cards { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card { border: 1px solid color-mix(in oklab, var(--fg) 12%, transparent); border-radius: 8px; padding: 1rem; background: color-mix(in oklab, var(--bg) 96%, var(--accent)); }
+.card h3 { margin: 0; font-size: 1.125rem; }
+.card .meta { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
+.card p { margin-top: 0.5rem; }
+.card a.more { display: inline-block; margin-top: 0.5rem; }
+
+/* Utility */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mb-0 { margin-bottom: 0; }
 
 .skip-link {
   left: -9999px;

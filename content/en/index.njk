@@ -1,9 +1,38 @@
 ---
-title: Hello template
-layout: page.njk
+title: Welcome
+layout: home.njk
+description: A clean, bootstrap-like blog/portfolio starter.
 ---
-<p>{% image "/assets/img/demo.jpg", "Demo", "(max-width: 768px) 90vw, 1200px" %}</p>
-{% include "backlinks.njk" %}
-{% if comments %}
-  {% include "comments.njk" %}
-{% endif %}
+<section class="hero">
+  <div class="container hero-inner">
+    <h1 class="page-title">{{ site.title }}</h1>
+    <p class="lead">A simple blog/portfolio starter with a clean, readable layout.</p>
+  </div>
+  
+</section>
+
+<section class="container content mt-6">
+  <h2 class="mt-0">Hello, I’m Marko</h2>
+  <p class="lead">This is a fake homepage to showcase the theme. It includes a visible site title, a navigation menu, a page title, and a centered content column.</p>
+  <p>Use this space to introduce yourself or your project. Replace the text with a short bio, your focus areas, or links to featured work. Keep paragraphs concise for readability.</p>
+  <p>Looking for a contact page? You’ll find it in the header. You can also add posts and projects as your content grows.</p>
+</section>
+
+<section class="container content mt-6">
+  <h2 class="mt-0">Latest Posts</h2>
+  <div class="cards mt-4">
+    {% for post in collections.posts | reverse | slice(0, 4) %}
+      <article class="card">
+        <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
+        {% if post.date %}
+        <p class="meta"><time>{{ post.date }}</time></p>
+        {% endif %}
+        <p>{{ post.data.description or (post.templateContent | excerpt(24)) }}</p>
+        <a class="more" href="{{ post.url }}">Read more →</a>
+      </article>
+    {% else %}
+      <p>No posts yet. Create one with <code>npm run new:post -- --title "My First Post"</code>.</p>
+    {% endfor %}
+  </div>
+  <p class="mt-4"><a href="{{ '/posts/' | i18nPath(lang) }}">View all posts →</a></p>
+</section>

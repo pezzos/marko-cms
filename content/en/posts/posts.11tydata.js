@@ -1,2 +1,4 @@
-export const tags = ["posts"];
-export const layout = "post.njk";
+export default {
+  tags: ["posts"],
+  layout: "post.njk",
+};

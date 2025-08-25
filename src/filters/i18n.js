@@ -1,6 +1,7 @@
 const translations = {
   home: { en: "Home", fr: "Accueil", es: "Inicio" },
-  contact: { en: "Contact", fr: "Contact", es: "Contacto" }
+  contact: { en: "Contact", fr: "Contact", es: "Contacto" },
+  blog: { en: "Blog", fr: "Blog", es: "Blog" }
 };
 
 function i18nPath(url, locale, defaultLocale = "en") {
