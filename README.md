@@ -1,6 +1,6 @@
 # Marko CMS
 
-Marko CMS is a reusable static-site template that combines Markdown content, Eleventy layouts and Tailwind CSS. It is designed to be deployed on Cloudflare Pages and supports Formspree for forms and Staticman for comments.
+Marko CMS is a reusable static-site template that combines Markdown content and Eleventy layouts. A lightweight theme is provided via `static/assets/theme.css` with optional Tailwind CSS utilities. It is designed to be deployed on Cloudflare Pages and supports Formspree for forms and Staticman for comments.
 
 ## Installation
 
