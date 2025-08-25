@@ -55,9 +55,7 @@ true` line when they are ready.
 
 ### Link pages across languages
 
-Use the same slug for every translation (e.g., `content/en/about.md`, `content/fr/about.md`). The `lang-switcher.njk` partial
-automatically links translations with `{{ baseUrl | i18nPath(loc) }}`. When linking inside content, generate localized URLs with
-`{{ '/contact/' | i18nPath(lang) }}`.
+Use the same slug for every translation (e.g., `content/en/about.md`, `content/fr/about.md`). The `lang-switcher.njk` partial automatically links translations with {% raw %}`{{ baseUrl | i18nPath(loc) }}`{% endraw %}. When linking inside content, generate localized URLs with {% raw %}`{{ '/contact/' | i18nPath(lang) }}`{% endraw %}.
 
 ### SEO / hreflang best practices
 
