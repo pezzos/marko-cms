@@ -1,17 +1,9 @@
 ---
 layout: base.njk
-title: Page non trouvée
+title: Page not found
 permalink: /404.html
 noindex: true
 ---
-<h1>Page non trouvée</h1>
-<p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
-<p><a href="/">Retour à l'accueil</a></p>
-{% set searchPage = collections.all | selectattr("url","equalto","/search/") | first %}
-{% if searchPage %}
-<form action="/search/" method="get">
-  <label for="search">Recherche</label>
-  <input type="search" id="search" name="q" />
-  <button type="submit">Rechercher</button>
-</form>
-{% endif %}
+<h1>Page not found</h1>
+<p>The page you're looking for doesn't exist or has been moved.</p>
+<p><a href="/">Back to home</a></p>
