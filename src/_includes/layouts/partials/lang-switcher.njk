@@ -1,0 +1,10 @@
+<nav aria-label="Sélecteur de langue" data-lang-switch>
+  {% for loc in site.locales %}
+    {% if loc == page.lang %}
+      <span aria-current="true">{{ loc | upper }}</span>
+    {% else %}
+      <a href="{{ baseUrl | i18nPath(loc) }}" data-locale="{{ loc }}">{{ loc | upper }}</a>
+    {% endif %}
+    {% if not loop.last %} | {% endif %}
+  {% endfor %}
+</nav>
