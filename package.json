@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css --watch & eleventy --serve --config=.eleventy.cjs",
     "prebuild": "node scripts/generate-demo-images.js",
-    "build": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css && eleventy --config=.eleventy.cjs && node src/generators/sitemap.cjs && node src/generators/rss.cjs && npx cleancss -o ./dist/assets/main.css ./dist/assets/main.css",
     "lint": "find src scripts _data test -type f '(' -name '*.js' -o -name '*.mjs' -o -name '*.cjs' ')' -print0 | xargs -0 -n1 node --check",
     "test": "node --test",
     "meta": "npm run lint && npm test && npm run prebuild && npm run build",
+    "build": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css && eleventy --config=.eleventy.cjs && node src/generators/sitemap.cjs && node src/generators/rss.cjs && node scripts/minify-css.mjs",
     "new:page": "node scripts/new-page.mjs",
     "new:post": "node scripts/new-page.mjs --type=post"
   },
