@@ -3,26 +3,28 @@
   {% set baseUrl = baseUrl | replace('/' + page.lang + '/', '/') %}
 {% endif %}
 <!DOCTYPE html>
-<html lang="{{ page.lang }}" class="no-js">
+<html lang="{{ lang }}" class="no-js">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>document.documentElement.classList.remove('no-js');</script>
     <script src="/assets/i18n-detect.js"></script>
     <link rel="stylesheet" href="/assets/main.css">
     <title>{{ title }}</title>
+    <meta name="description" content="{{ description or site.description }}">
     {% if noindex %}
     <meta name="robots" content="noindex" />
     {% endif %}
     {% include "layouts/partials/head-seo.njk" %}
   </head>
   <body class="bg-white text-slate-800">
-    <a class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:p-2 focus:bg-white" href="#main">Aller au contenu</a>
-    <nav aria-label="Main navigation">
-      <a href="{{ '/' | i18nPath(page.lang) }}">{{ 'home' | t(page.lang) }}</a>
-      <a href="{{ '/contact/' | i18nPath(page.lang) }}">{{ 'contact' | t(page.lang) }}</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <nav class="container" aria-label="Navigation principale">
+      <a href="{{ '/' | i18nPath(lang) }}"{% if page.url == ('/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'home' | t(lang) }}</a>
+      <a href="{{ '/contact/' | i18nPath(lang) }}"{% if page.url == ('/contact/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'contact' | t(lang) }}</a>
     </nav>
     {% include "layouts/partials/lang-switcher.njk" %}
-    <main id="main">
+    <main id="main" class="container">
       {% block content %}{% endblock %}
     </main>
     <script src="/assets/i18n-switch.js"></script>
