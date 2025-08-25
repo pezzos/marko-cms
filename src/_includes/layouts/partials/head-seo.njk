@@ -1,0 +1,5 @@
+<link rel="canonical" href="{{ page.url | absoluteUrl(site.url) }}">
+{% for loc in site.locales %}
+  <link rel="alternate" hreflang="{{ loc }}" href="{{ baseUrl | localizedUrl(loc) }}">
+{% endfor %}
+<link rel="alternate" hreflang="x-default" href="{{ baseUrl | localizedUrl(site.defaultLocale) }}">

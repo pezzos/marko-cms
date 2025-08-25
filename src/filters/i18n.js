@@ -13,4 +13,9 @@ function t(key, locale, defaultLocale = "en") {
   return entry[locale] || entry[defaultLocale] || key;
 }
 
-module.exports = { i18nPath, t };
+function localizedUrl(url, locale, siteUrl, defaultLocale = "en") {
+  const path = i18nPath(url, locale, defaultLocale);
+  return new URL(path, siteUrl).toString();
+}
+
+module.exports = { i18nPath, t, localizedUrl };
