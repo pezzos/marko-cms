@@ -1,3 +1,7 @@
+{% set baseUrl = page.url %}
+{% if page.lang != site.defaultLocale %}
+  {% set baseUrl = baseUrl | replace('/' + page.lang + '/', '/') %}
+{% endif %}
 <!DOCTYPE html>
 <html lang="{{ page.lang }}" class="no-js">
   <head>
@@ -9,13 +13,7 @@
     {% if noindex %}
     <meta name="robots" content="noindex" />
     {% endif %}
-    {% set baseUrl = page.url %}
-    {% if page.lang != site.defaultLocale %}
-      {% set baseUrl = baseUrl | replace('/' + page.lang + '/', '/') %}
-    {% endif %}
-    {% for loc in site.locales %}
-      <link rel="alternate" hreflang="{{ loc }}" href="{{ baseUrl | i18nPath(loc) }}">
-    {% endfor %}
+    {% include "layouts/partials/head-seo.njk" %}
   </head>
   <body class="bg-white text-slate-800">
     <a class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:p-2 focus:bg-white" href="#main">Aller au contenu</a>

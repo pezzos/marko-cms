@@ -5,7 +5,7 @@ const posthtml = require("posthtml");
 const Image = require("@11ty/eleventy-img");
 const { minify } = require("html-minifier-terser");
 const site = require("./_data/site.json");
-const { i18nPath, t } = require("./src/filters/i18n.js");
+const { i18nPath, t, localizedUrl } = require("./src/filters/i18n.js");
 
 const glossaryPath = path.join("_data", "glossary.yml");
 let glossary = {};
@@ -32,6 +32,9 @@ module.exports = function(eleventyConfig) {
   );
   eleventyConfig.addFilter("t", (key, locale) =>
     t(key, locale, site.defaultLocale)
+  );
+  eleventyConfig.addFilter("localizedUrl", (url, locale) =>
+    localizedUrl(url, locale, site.url, site.defaultLocale)
   );
 
   eleventyConfig.addGlobalData("eleventyComputed", {
