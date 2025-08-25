@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css --watch & eleventy --serve --config=.eleventy.cjs",
     "prebuild": "node scripts/generate-demo-images.js",
-    "build": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css && eleventy --config=.eleventy.cjs && node src/generators/sitemap.cjs && node src/generators/rss.cjs && npx cleancss -o ./dist/assets/main.css ./dist/assets/main.css",
+    "build": "npx tailwindcss -i ./src/assets/css/main.css -o ./static/assets/main.css && eleventy --config=.eleventy.cjs && node src/generators/sitemap.cjs && node src/generators/rss.cjs && node scripts/minify-css.mjs",
     "lint": "echo 'lint placeholder'; exit 0",
     "test": "echo 'test placeholder'; exit 0",
     "new:page": "node scripts/new-page.mjs",
