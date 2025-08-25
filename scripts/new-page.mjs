@@ -1,24 +1,37 @@
 import fs from 'fs';
 import path from 'path';
 
-// Simple argument parser for --key=value pairs
-const args = Object.fromEntries(
-  process.argv.slice(2).map(arg => {
-    const [key, ...rest] = arg.replace(/^--/, '').split('=');
-    return [key, rest.length ? rest.join('=') : ''];
-  })
-);
+// Parse CLI arguments supporting "--key=value", "--key value" and flags
+const rawArgs = process.argv.slice(2);
+const args = {};
+for (let i = 0; i < rawArgs.length; i++) {
+  let arg = rawArgs[i];
+  if (!arg.startsWith('--')) continue;
+  arg = arg.slice(2);
+  if (arg.includes('=')) {
+    const [key, value] = arg.split('=');
+    args[key] = value;
+  } else {
+    const next = rawArgs[i + 1];
+    if (next && !next.startsWith('--')) {
+      args[arg] = next;
+      i++;
+    } else {
+      args[arg] = true;
+    }
+  }
+}
 
 const type = args.type || 'page';
-const title = args.title || process.env.npm_config_title;
-const providedSlug = args.slug || process.env.npm_config_slug;
+const title = args.title;
+const providedSlug = args.slug;
 
 if (!title) {
   console.error('Missing required --title argument');
   process.exit(1);
 }
 
-// Slugify function: lower-case, remove accents, non-alphanumeric to hyphen
+// Slugify: lower-case, remove accents, non-alphanumeric to hyphen
 const slugify = str =>
   str
     .normalize('NFD')
@@ -31,39 +44,61 @@ const slugify = str =>
 
 const slug = providedSlug ? slugify(providedSlug) : slugify(title);
 
-const now = new Date();
-let destDir;
-let filename;
+const now = new Date().toISOString();
 
 if (type === 'post') {
-  const datePrefix = now.toISOString().slice(0, 10);
-  destDir = path.join('src', 'content', 'posts');
-  filename = `${datePrefix}-${slug}.md`;
-} else {
-  destDir = path.join('src', 'content', 'pages');
-  filename = `${slug}.md`;
+  const destDir = path.join('src', 'content', 'posts');
+  fs.mkdirSync(destDir, { recursive: true });
+  const datePrefix = now.slice(0, 10);
+  const filePath = path.join(destDir, `${datePrefix}-${slug}.md`);
+  const frontMatter = [
+    '---',
+    `title: "${title}"`,
+    'description: ""',
+    `date: "${now}"`,
+    'layout: "layouts/post.njk"',
+    'tags: []',
+    '---',
+    `# ${title}`,
+    '',
+    'Content goes here…',
+    '',
+  ].join('\n');
+  fs.writeFileSync(filePath, frontMatter);
+  console.log(`Created ${filePath}`);
+  process.exit(0);
 }
 
-// Ensure destination directory exists
-fs.mkdirSync(destDir, { recursive: true });
+// Multilingual pages
+const languages = ['en'];
+if (!args['no-fr']) languages.push('fr');
+if (!args['no-es']) languages.push('es');
 
-const filePath = path.join(destDir, filename);
+languages.forEach(lang => {
+  const langDir = path.join('content', lang);
+  fs.mkdirSync(langDir, { recursive: true });
+  const filePath = path.join(langDir, `${slug}.md`);
 
-const frontMatterLines = [
-  '---',
-  `title: "${title}"`,
-  'description: ""',
-];
+  const frontMatterLines = [
+    '---',
+    `title: "${title}"`,
+    'description: ""',
+    `date: "${now}"`,
+    'layout: "layouts/page.njk"',
+  ];
 
-if (type === 'post') {
-  frontMatterLines.push(`date: "${now.toISOString()}"`);
-}
+  if (lang !== 'en') {
+    frontMatterLines.push('draft: true');
+  }
 
-frontMatterLines.push(`layout: "layouts/${type}.njk"`);
-frontMatterLines.push('tags: []');
-frontMatterLines.push('---', '', `# ${title}`, '', 'Contenu à écrire…', '');
+  frontMatterLines.push('---', '');
 
-fs.writeFileSync(filePath, frontMatterLines.join('\n'));
+  let body = `# ${title}\n\nContent goes here…\n`;
+  if (lang !== 'en') {
+    body = `> **Needs translation**\n\n${body}`;
+  }
 
-console.log(`Created ${filePath}`);
+  fs.writeFileSync(filePath, frontMatterLines.join('\n') + body);
+  console.log(`Created ${filePath}`);
+});
 
