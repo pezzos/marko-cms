@@ -107,7 +107,8 @@ temp/
 .vscode/
 
 # Generated assets
-static/assets/
+static/assets/*
+!static/assets/theme.css
 
 # Demo images generated at build time
 src/assets/img/*

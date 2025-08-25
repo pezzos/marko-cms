@@ -1,0 +1,6 @@
+<header class="site-header">
+  <nav class="container" aria-label="Navigation principale">
+    <a href="{{ '/' | i18nPath(lang) }}"{% if page.url == ('/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'home' | t(lang) }}</a>
+    <a href="{{ '/contact/' | i18nPath(lang) }}"{% if page.url == ('/contact/' | i18nPath(lang)) %} aria-current="page"{% endif %}>{{ 'contact' | t(lang) }}</a>
+  </nav>
+</header>
