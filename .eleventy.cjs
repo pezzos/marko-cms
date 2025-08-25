@@ -2,8 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const posthtml = require("posthtml");
-const Image = require("@11ty/eleventy-img");
 const { minify } = require("html-minifier-terser");
+const imageShortcode = require("./src/shortcodes/image.js");
 const site = require("./_data/site.json");
 const { i18nPath, t, localizedUrl } = require("./src/filters/i18n.js");
 
@@ -65,25 +65,7 @@ module.exports = function(eleventyConfig) {
     );
   });
 
-  eleventyConfig.addNunjucksAsyncShortcode("image", async (src, alt, sizes) => {
-    const fullSrc = path.join("src", src);
-    const metadata = await Image(fullSrc, {
-      widths: [480, 768, 1024, 1600],
-      formats: ["webp", "jpeg"],
-      outputDir: "./dist/assets/img/",
-      urlPath: "/assets/img/",
-      cacheOptions: {
-        directory: ".cache/img"
-      }
-    });
-    const imageAttributes = {
-      alt,
-      sizes,
-      loading: "lazy",
-      decoding: "async"
-    };
-    return Image.generateHTML(metadata, imageAttributes);
-  });
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
 
   eleventyConfig.addFilter("rssDate", (dateObj) => dateObj.toUTCString());
   eleventyConfig.addFilter("absoluteUrl", (path, base) => new URL(path, base).toString());
