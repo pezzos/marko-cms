@@ -21,18 +21,10 @@
       <a href="{{ '/' | i18nPath(page.lang) }}">{{ 'home' | t(page.lang) }}</a>
       <a href="{{ '/contact/' | i18nPath(page.lang) }}">{{ 'contact' | t(page.lang) }}</a>
     </nav>
-    <nav aria-label="Language selector">
-      {% for loc in site.locales %}
-        {% if loc == page.lang %}
-          <span aria-current="page">{{ loc | upper }}</span>
-        {% else %}
-          <a href="{{ baseUrl | i18nPath(loc) }}">{{ loc | upper }}</a>
-        {% endif %}
-        {% if not loop.last %} {% endif %}
-      {% endfor %}
-    </nav>
+    {% include "layouts/partials/lang-switcher.njk" %}
     <main id="main">
       {% block content %}{% endblock %}
     </main>
+    <script src="/assets/i18n-switch.js"></script>
   </body>
 </html>
